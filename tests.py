@@ -124,6 +124,13 @@ class MWParserTests(unittest.TestCase):
         got = p.render()
         self.assertEqual(got, wanted)
 
+    def testLinkPostfixRendering(self):
+        markup = 'foobar [[Woo]]'
+        p = WikiMarkup(markup)
+        p.set_link_postfix('.mw')
+        got = p.render()
+        self.assertEqual('<p>foobar <a href="Woo.mw">Woo</a></p>', got)
+
 
 
 if __name__ == '__main__':

@@ -62,10 +62,14 @@ class WikiMarkup:
     
     def __init__(self, s = ''):
         self.link_prefix = ''
+        self.link_postfix = ''
         self.set_markup(s)
     
     def set_link_prefix(self, prefix):
         self.link_prefix = prefix
+    
+    def set_link_postfix(self, postfix):
+        self.link_postfix = postfix
     
     def find_references(self, pull=False):
         ref_re = r'<ref.+?</ref>'
@@ -116,7 +120,7 @@ class WikiMarkup:
             # First look for ]]
             subsplitted = para.split(']]')
             for subelt in subsplitted:
-                internal = re.sub(r"\[\[(.*)", r'<a href="%s\1">\1</a>' % self.link_prefix, subelt)
+                internal = re.sub(r"\[\[(.*)", r'<a href="%s\1%s">\1</a>' % (self.link_prefix, self.link_postfix), subelt)
                 if internal != subelt:
                     newpara += internal
                 else:
